@@ -1,0 +1,77 @@
+<!--
+  Че, js, да?!
+-->
+
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script>
+
+            function gameStep(){
+                var userNum = Number(document.getElementById("txt").value);
+                var copy = userNum;
+                if ((userNum < 100) || (userNum > 9999)){
+                    alert("Повторяющиеся цифры!");
+                    return false;
+                }   
+
+                var uNum = new Array(mullNum);
+                for (var i=mullNum-1; i>=0; i--){
+                    uNum[i] = userNum % 10;
+                    userNum = Math.floor(userNum / 10);
+                }
+
+                for (var i=0; i<mullNum; i++){
+                    for (var j=0; j<i; j++){
+                        if (uNum[i] == uNum[j]){
+                            alert("Повторяющиеся цифры!");
+                            return false;
+                        }
+                    }
+                }
+
+                var cows=0, mulls=0; 
+                for (var i=0; i<mullNum; i++){
+                    for (var j=0; j<mullNum; j++){
+                        if (hid[i] == uNum[j]){
+                            if(i==j){
+                                mulls++;
+                            }else{
+                                cows++;
+                            }
+                       }
+                    }
+                }
+                var win = "";
+                if (mulls == 4){
+                    win = " - YOU  WIN!";
+                }
+                var node = document.createTextNode("Input: " + copy +  " Cows: " + cows + " Mulls: " + mulls + win);
+                var p = document.createElement("p");
+                p.appendChild(node);
+                document.getElementsByTagName("html")[0].appendChild(p);
+            }
+
+            var mullNum = 4;
+            var hid = new Array(mullNum);
+            for (var i=0; i<mullNum; i++){
+                hid[i] = Math.floor(Math.random() * 10);
+                //alert("hid[" + i + "] = " + hid[i]);
+                for (var j=0; j<i; j++){
+                    if(hid[i] == hid[j]){
+                        i--;
+                        continue;
+                    }
+                }
+            }
+            
+        </script>
+    </head>
+    <body>
+        <form>
+            <input type="text" id="txt">
+            <input type="button" id="btn" value="Ввод" onclick="gameStep()">
+        </form> 
+    </body>
+</html>
